@@ -1,5 +1,5 @@
 #!/bin/bash
-#permet de stopper le script si un sous-script ou un tube (pipe) échoue
+# Permet de stopper le script si un sous-script ou un tube (pipe) échoue
 set -e
 set -o pipefail
 
