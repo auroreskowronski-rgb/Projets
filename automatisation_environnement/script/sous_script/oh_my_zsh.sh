@@ -11,7 +11,7 @@ if [ -d "$USER_HOME/.oh-my-zsh" ] ; then
 else
     echo "'oh-my-zsh' n'etait pas déjà installé" 
     #Installe oh-my-zhs en tant que $USER_NAME dans $USER_HOME; en mode non interactif et sans changer le shell à la fin
-    sudo -u "$USER_NAME" HOME="$USER_HOME" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --skip-chsh    
+    sudo -u "$USER_NAME" HOME="$USER_HOME" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --skip-chsh  >/dev/null 2>>/dev/null 
     echo "'oh-my-zsh' a été installé." 
 fi
 
