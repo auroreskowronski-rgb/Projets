@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
-
 import pygame
-from paddle import Paddle
 from ball import Ball
+from paddle import Paddle
 
 
 class Game:
@@ -15,7 +13,7 @@ class Game:
         self.clock = pygame.time.Clock()
         # Charger le fond
         self.fond = pygame.image.load(
-            "jeu_python/BasicBreakoutAssetPack/background.png"
+            "BasicBreakoutAssetPack/background.png"
         ).convert_alpha()
         # Definit le joueur comme la paddle
         self.player = Paddle()
@@ -36,12 +34,11 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-            
+
             # Affichage
             self.screen.blit(self.fond, (0, 0))
             self.screen.blit(self.player.image, self.player.rect)
             self.screen.blit(self.ball.image, self.ball.rect)
-           
 
             # Gestion des touches
             keys = pygame.key.get_pressed()
@@ -52,7 +49,6 @@ class Game:
 
             self.ball.move()
             self.ball.check_collision_paddle(self.player)
-
 
             pygame.display.flip()
             self.clock.tick(60)

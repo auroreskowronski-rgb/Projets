@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 import pygame
-import pytmx
 from game import Game
-
 
 """jeu_python.main"""
 

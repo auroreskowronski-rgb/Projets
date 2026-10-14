@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import pygame
 
 
@@ -7,7 +5,7 @@ class Paddle(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = pygame.image.load(
-            "jeu_python/BasicBreakoutAssetPack/paddle.png"
+            "BasicBreakoutAssetPack/paddle.png"
         ).convert_alpha()
         self.rect = self.image.get_rect()
         # Vitesse de déplacement de la paddle
