@@ -17,8 +17,8 @@ class Game:
         ).convert_alpha()
         # Definit le joueur comme la paddle
         self.player = Paddle()
-        # definit la position de la paddle
-        self.player.rect.x = 640 - self.player.rect.width / 2
+        # definit la position de la paddle (round(int...)) pour eviter plantage si la hauteur de la paddle est impaire
+        self.player.rect.x =  int(round(640 - self.player.rect.width / 2,0))
         self.player.rect.y = 720 - self.player.rect.height  -10
 
     # Boucle du jeu
