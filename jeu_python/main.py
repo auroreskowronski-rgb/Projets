@@ -9,8 +9,10 @@ from paddle import Paddle
 
 __author__ = "skowro_j"
 
-
+# Initialisation de Pygame
 pygame.init()
+
+
 
 
 if __name__ == "__main__":
