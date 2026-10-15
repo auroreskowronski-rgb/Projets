@@ -15,8 +15,14 @@ class Ball(pygame.sprite.Sprite):
         # Vitesse de déplacement de la balle
         self.speed_x = 0
         self.speed_y = -10
+        self.is_moving = False
 
-    def move(self):
+    def move(self, player):
+
+        if not self.is_moving:
+            # Tant qu'elle ne bouge pas, elle reste positionnée au-dessus de la raquette
+            self.rect.x = int(round(player.rect.x + (player.rect.width / 2) - (self.rect.width / 2), 0))
+            self.rect.y = player.rect.y - self.rect.height + 10
         
         self.rect.x += self.speed_x
 
@@ -48,15 +54,16 @@ class Ball(pygame.sprite.Sprite):
         ball_center = self.rect.centerx
         paddle_center = paddle.rect.centerx
         offset = ball_center - paddle_center
+        print(offset)
         # Ajuster la vitesse sur l'axe X selon l'endroit de l'impact
         self.speed_x =min(abs(offset) ** 2 * 0.01, 9)
         # Ajuster la vitesse sur l'axe y en fonction de la vitesse de x
        
-        print("a", self.speed_x, self.speed_y, amp_vect_1)
+        
         self.speed_y =(amp_vect_1**2 - self.speed_x**2)**0.5
         self.speed_y = -self.speed_y
 
         if offset < 0:
                     self.speed_x = -self.speed_x
 
-        print("b", self.speed_x, self.speed_y, amp_vect_1, (self.speed_y))
+        
