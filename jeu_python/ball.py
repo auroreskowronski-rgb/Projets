@@ -41,9 +41,7 @@ class Ball(pygame.sprite.Sprite):
         # Vérifie si la balle touche la raquette
         if not self.rect.colliderect(paddle.rect):
             return
-        
         amp_vect_1 = utilities.amplitude_vector(self.speed_x, self.speed_y)
-        # Inverser la vitesse verticale pour faire rebondir la balle vers le haut
         # Repositionner la balle juste au dessus de la paddle (anti-bug)
         self.rect.bottom = paddle.rect.top
         #Calculer le décalage entre le centre de la balle et le centre de la raquette
@@ -51,14 +49,14 @@ class Ball(pygame.sprite.Sprite):
         paddle_center = paddle.rect.centerx
         offset = ball_center - paddle_center
         # Ajuster la vitesse sur l'axe X selon l'endroit de l'impact
-        self.speed_x =(abs(offset) ** 2 * 0.01)
+        self.speed_x =min(abs(offset) ** 2 * 0.01, 9)
         # Ajuster la vitesse sur l'axe y en fonction de la vitesse de x
        
-        
-        self.speed_y =((amp_vect_1**2 - self.speed_x**2)**0.5)
+        print("a", self.speed_x, self.speed_y, amp_vect_1)
+        self.speed_y =(amp_vect_1**2 - self.speed_x**2)**0.5
         self.speed_y = -self.speed_y
 
         if offset < 0:
                     self.speed_x = -self.speed_x
 
-        print(self.speed_x, self.speed_y, amp_vect_1, (self.speed_y))
+        print("b", self.speed_x, self.speed_y, amp_vect_1, (self.speed_y))
