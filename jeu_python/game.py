@@ -2,6 +2,8 @@ import pygame
 from ball import Ball
 from paddle import Paddle
 
+from brick import Brick
+
 
 class Game:
     # Créer une fenêtre de jeu
@@ -21,24 +23,33 @@ class Game:
         self.player.rect.x = int(round(640 - self.player.rect.width / 2, 0))
         self.player.rect.y = 720 - self.player.rect.height - 10
 
-        # 2. Instanciation de la balle
+        # Instanciation de la balle
         self.ball = Ball()
         # Positionner la balle au centre, juste au-dessus de la raquette
         self.ball.rect.x = int(round(640 - self.ball.rect.width / 2, 0))
         self.ball.rect.y = self.player.rect.y - self.ball.rect.height - 5
 
+        # Instanciation des briques
+        self.bricks = pygame.sprite.Group()
+        for i in range(5):
+            for j in range(10):
+                brick = Brick()
+                brick.rect.x = 100 + j * (brick.rect.width + 10)
+                brick.rect.y = 50 + i * (brick.rect.height + 10)
+                self.bricks.add(brick)
+
     def reset(self):
-        #Replace la raquette au centre
+        # Replace la raquette au centre
         self.player.rect.x = int(round(640 - self.player.rect.width / 2, 0))
         self.player.rect.y = 720 - self.player.rect.height - 10
-                
+
         # Replace la balle juste au-dessus de la raquette
         self.ball.rect.x = int(round(640 - self.ball.rect.width / 2, 0))
         self.ball.rect.y = self.player.rect.y - self.ball.rect.height - 5
-        
+
         # Reinitialise la vitesse de la balle a son etat initial
-        self.ball.speed_x= 0
-        self.ball.speed_y= -10
+        self.ball.speed_x = 0
+        self.ball.speed_y = -10
         self.ball.is_moving = False
 
     # Boucle du jeu
@@ -48,7 +59,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-                
+
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                     self.ball.is_moving = True
 
@@ -56,9 +67,9 @@ class Game:
             self.screen.blit(self.fond, (0, 0))
             self.screen.blit(self.player.image, self.player.rect)
             self.screen.blit(self.ball.image, self.ball.rect)
-           
-           
-                
+            for brick in self.bricks:
+                self.screen.blit(brick.image, brick.rect)
+
             # Gestion des touches
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
@@ -68,6 +79,7 @@ class Game:
 
             self.ball.move(self.player)
             self.ball.check_collision_paddle(self.player)
+            self.ball.check_collision_bricks(self.bricks)
 
             pygame.display.flip()
             self.clock.tick(60)
@@ -75,8 +87,5 @@ class Game:
             # Si la balle dépasse le bas de l'écran, on reset
             if self.ball.rect.y > 720:
                 self.reset()
-
-
-   
 
     pygame.quit()
