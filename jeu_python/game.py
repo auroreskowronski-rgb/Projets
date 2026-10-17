@@ -1,3 +1,6 @@
+import csv
+import os
+
 import pygame
 from ball import Ball
 from paddle import Paddle
@@ -30,13 +33,26 @@ class Game:
         self.ball.rect.y = self.player.rect.y - self.ball.rect.height - 5
 
         # Instanciation des briques
-        self.bricks = pygame.sprite.Group()
-        for i in range(5):
-            for j in range(10):
-                brick = Brick()
-                brick.rect.x = 100 + j * (brick.rect.width + 10)
-                brick.rect.y = 50 + i * (brick.rect.height + 10)
-                self.bricks.add(brick)
+        self.bricks = self.load_level(
+            os.path.join(os.path.dirname(__file__), "levels", "level3.csv")
+        )
+
+    # Crée les briques à partir d'un CSV 
+    def load_level(self, path):
+        bricks = pygame.sprite.Group()
+        with open(path, newline="") as f:
+            for i, row in enumerate(csv.reader(f)):
+                for j, cell in enumerate(row):
+                    if cell.strip() in ("", "0"):
+                        continue
+                    value = cell.strip()
+                    if value in ("", "0"):
+                        continue
+                    brick = Brick(int(value))
+                    brick.rect.x = 82 + j * (brick.rect.width + 10)
+                    brick.rect.y = 50 + i * (brick.rect.height + 10)
+                    bricks.add(brick)
+        return bricks
 
     def reset(self):
         # Replace la raquette au centre
